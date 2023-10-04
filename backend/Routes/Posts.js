@@ -7,23 +7,23 @@ const router = express.Router();
 router.use(express.json()) 
 
 // Get data from posts
-router.get('/posts', (req,res)=>{
-    PostsCollection.find({})
+router.get('/posts', async(req,res)=>{
+    await PostsCollection.find({})
     .then(data=>res.json(data))
     .catch(err=>res.json(err))
 })
 
 // Post new post
-router.post('/post/add', (req, res)=>{
-    PostsCollection.create(req.body)
+router.post('/post/add', async(req, res)=>{
+    await PostsCollection.create(req.body)
     .then(data=>res.json(data))
     .catch(err=>res.json(err))
 })
 
 // Get particular post
-router.get('/post/:id', (req, res)=>{
+router.get('/post/:id', async(req, res)=>{
     let id = req.params.id;
-    PostsCollection.findById({_id:id})
+    await PostsCollection.findById({_id:id})
     .then(data=>res.json(data))
     .catch(err=>res.json(err))
 })
@@ -36,9 +36,9 @@ router.get('/post/data/:id', async(req, res)=>{
     .catch(err=>res.json(err))
 })
 
-router.delete('/post/delete/:id', (req, res)=>{
+router.delete('/post/delete/:id', async(req, res)=>{
     let id = req.params.id;
-    PostsCollection.findByIdAndDelete({_id:id})
+    await PostsCollection.findByIdAndDelete({_id:id})
     .then(data=>res.json(data))
     .catch(err=>res.json(err))
 })

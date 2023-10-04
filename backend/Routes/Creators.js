@@ -7,8 +7,8 @@ const router = express.Router();
 router.use(express.json()) 
 
 // Get data of all Creators
-router.get('/creators', (req, res)=>{
-    CreatorCollection.find({})
+router.get('/creators', async(req, res)=>{
+    await CreatorCollection.find({})
     .then(data=>res.json(data))
     .catch(err=>res.json(err))
 })
@@ -29,9 +29,9 @@ router.post('/creator/add', async(req, res)=>{
 }) 
 
 // Get a particular creator
-router.get('/creator/:id', (req, res)=>{
+router.get('/creator/:id', async(req, res)=>{
     let id = req.params.id;
-    CreatorCollection.findById({_id:id})
+    await CreatorCollection.findById({_id:id})
     .then(data=>res.json(data))
     .catch(err=>res.send(err))
 })
