@@ -16,8 +16,9 @@ server.use('/', require('./Routes/Posts'));
 server.use('/', require('./Routes/Creators'));
 
 // Connect to Server
-server.listen(1000, ()=>{
-    console.log('Server Connected');
+const port = process.env.PORT || 3000
+server.listen(port, ()=>{
+    console.log('Server Connected'+port);
 })
 
 
