@@ -14,7 +14,7 @@ export default function Posts() {
   useState(()=>{
     // Fetch Api data
     const fetchRandomImage = async()=>{
-      const data = await axios.get('http://localhost:1000/posts');   
+      const data = await axios.get('https://instagram-post.onrender.com/posts');   
       shuffleArray(data.data);
     }
     fetchRandomImage();  

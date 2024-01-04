@@ -12,7 +12,7 @@ export default function NewPost() {
 
   const onSubmit = async(e) =>{
     e.preventDefault();
-    await axios.post('http://localhost:1000/post/add', {image, tag, username})
+    await axios.post('https://instagram-post.onrender.com/post/add', {image, tag, username})
     .then(res=>{ 
       if(res.data.message){
         alert(res.data.message)

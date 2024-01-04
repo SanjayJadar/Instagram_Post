@@ -12,7 +12,7 @@ export default function Login() {
 
   const onSubmit = async(e) => {
     e.preventDefault();
-    await axios.post('http://localhost:1000/creator/login', {username, password})
+    await axios.post('https://instagram-post.onrender.com/creator/login', {username, password})
     .then(res=>{  
       if(res.data !== 'invalid'){
           alert('Logedin Successfully'); 

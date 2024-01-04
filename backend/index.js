@@ -24,13 +24,13 @@ server.listen(port, ()=>{
 
 
 // ALL REquests
-// http://localhost:1000/creators             ALL creators
-// http://localhost:1000/creator/add           Add new Creator
-// http://localhost:1000/creator/:id           Get particulatar creator
-// http://localhost:1000/creator/login          login creator
+// https://instagram-post.onrender.com//creators             ALL creators
+// https://instagram-post.onrender.com//creator/add           Add new Creator
+// https://instagram-post.onrender.com//creator/:id           Get particulatar creator
+// https://instagram-post.onrender.com//creator/login          login creator
 
-// http://localhost:1000/posts             All posts
-// http://localhost:1000/post/add            Add new post
-// http://localhost:1000/post/:id          Get a particular post
-// http://localhost:1000/post/data/:id         Get a particular creator's posts
-// http://localhost:1000/post/delete/:id     Delete a post
+// https://instagram-post.onrender.com//posts             All posts
+// https://instagram-post.onrender.com//post/add            Add new post
+// https://instagram-post.onrender.com//post/:id          Get a particular post
+// https://instagram-post.onrender.com//post/data/:id         Get a particular creator's posts
+// https://instagram-post.onrender.com//post/delete/:id     Delete a post

@@ -10,7 +10,7 @@ export default function SignUp() {
 
   const onSubmit = async(e) => {
     e.preventDefault();
-    await axios.post('http://localhost:1000/creator/add', {username, image, password})
+    await axios.post('https://instagram-post.onrender.com/creator/add', {username, image, password})
     .then(res=>{ 
       if(res.data==='Exist'){
           alert('User exist'); 

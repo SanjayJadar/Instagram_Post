@@ -10,7 +10,7 @@ export default function Profile() {
   useEffect(()=>{
       const fetchData = async () => {
           try {
-            const apiData = await axios.get(`http://localhost:1000/post/data/${userData}`);
+            const apiData = await axios.get(`https://instagram-post.onrender.com/post/data/${userData}`);
             setValues(apiData.data);
             // console.log(apiData.data);
           } catch (error) {
@@ -25,7 +25,7 @@ export default function Profile() {
   const onDelete = async(item) =>{
     const confirmed = window.confirm("Are you sure you want to delete this item?");
     if(confirmed){
-      await axios.delete(`http://localhost:1000/post/delete/${item}`);
+      await axios.delete(`https://instagram-post.onrender.com/post/delete/${item}`);
       window.location.reload();
     }
   }

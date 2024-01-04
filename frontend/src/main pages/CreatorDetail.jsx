@@ -10,7 +10,7 @@ export default function CreatorDetail() {
     useEffect(()=>{
         const fetchData = async () => {
             try {
-              const apiData = await axios.get(`http://localhost:1000/post/data/${location.state.username}`);
+              const apiData = await axios.get(`https://instagram-post.onrender.com/post/data/${location.state.username}`);
               let values = apiData.data;
               setValues(values.reverse());
               console.log(apiData.data);

@@ -10,7 +10,7 @@ export default function Creators() {
 
   useEffect(()=>{
     const fetchapi = async() =>{
-      const apidata = await axios.get('http://localhost:1000/creators')
+      const apidata = await axios.get('https://instagram-post.onrender.com/creators')
       setCreator(apidata.data);
     } 
     fetchapi();
