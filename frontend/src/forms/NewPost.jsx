@@ -19,7 +19,7 @@ export default function NewPost() {
       }
       else{ 
         alert('Posted Successfully');
-        navigate('/profile')
+        navigate('/')
       }
     })
     .catch(e=>console.log(e.message));

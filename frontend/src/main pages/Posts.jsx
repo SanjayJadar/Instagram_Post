@@ -5,7 +5,9 @@ import axios from 'axios';
 export default function Posts() {
   
   const [randomImage, setRandomImage] = useState([]);
-  
+  const [dataFetching, setdataFetching] = useState(false);
+  const [hasMoreData, setHasMoreData] = useState(true); 
+
   let token = false;      // Login Status
   if(localStorage.getItem('data')){
       token = true;
@@ -46,14 +48,24 @@ export default function Posts() {
             </div>
         }
 
-        {randomImage.map((item, index)=>{
-          return (
-            <div key={index}>
-                <img className='block ml-auto mr-auto object-cover w-96 mt-16' src={item.image} alt="post" />
-                <h4>{item.tag}</h4>
-            </div>
-          )
-        })}
+        {randomImage.length!==0 ? 
+          randomImage.map((item, index)=>{
+            return (
+              <div key={index}>
+                  <img className='block ml-auto mr-auto object-cover w-96 mt-16' src={item.image} alt="post" />
+                  <h4 className='block ml-auto mr-auto w-80'>{item.tag}</h4>
+              </div>
+            )
+          })
+          : 
+          <div className='placeholder-box flex flex-col items-center justify-center'>
+              {/* Empty box as a placeholder */}
+              {Array.from({ length: 5 }, (_, index) => (
+                <div key={index} className='w-96 h-96 bg-gray-300 m-8'></div>
+              ))}
+              <div className='m-8'>Loading...</div>
+          </div>
+        }
     </div>
   )
 }

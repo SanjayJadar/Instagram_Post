@@ -6,14 +6,17 @@ export default function CreatorDetail() {
 
     const location = useLocation();
     const [values, setValues] = useState([]);
+    const [avilable, setAvilable] = useState(true);
 
     useEffect(()=>{
         const fetchData = async () => {
             try {
               const apiData = await axios.get(`https://instagram-post.onrender.com/post/data/${location.state.username}`);
               let values = apiData.data;
-              setValues(values.reverse());
-              console.log(apiData.data);
+              setValues(values.reverse()); 
+              if(values.length===0){
+                setAvilable(false);
+              }
             } catch (error) {
               console.error('Error fetching data:', error);
             }
@@ -35,17 +38,28 @@ export default function CreatorDetail() {
           </div>
         </Link>
 
-        {values.length!==0 ? 
-            values.reverse().map((item, index)=>{
-              return (
-                <div key={index}>
-                    <img className='block ml-auto mr-auto object-cover w-96 mt-20' src={item.image} alt="post" />
-                    <h4>{item.tag}</h4>
-                </div>
-              )
-            }) 
-            :
-            <div>No Post Posted Yet</div> 
+        { avilable ?
+          (
+            values.length!==0 ? 
+              values.reverse().map((item, index)=>{
+                return (
+                  <div key={index}>
+                      <img className='block ml-auto mr-auto object-cover w-96 mt-20' src={item.image} alt="post" />
+                      <h4>{item.tag}</h4>
+                  </div>
+                )
+              }) 
+              :
+              <div className='placeholder-box flex flex-col items-center justify-center'>
+                    {/* Empty box as a placeholder */}
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <div key={index} className='w-96 h-96 bg-gray-300 m-8'></div>
+                  ))}
+                  <div className='m-8'>Loading...</div>
+              </div>
+          )
+          : 
+          (<div className='m-20'>Not Yet Posted</div>)
         }
     </div>
   )

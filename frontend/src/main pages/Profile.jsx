@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Profile() {
 
   const [values, setValues] = useState([]);
+  const [avilable, setAvilable] = useState(true);
   let userData = localStorage.getItem('data'); 
+  const navigate = useNavigate()
 
   useEffect(()=>{
       const fetchData = async () => {
           try {
             const apiData = await axios.get(`https://instagram-post.onrender.com/post/data/${userData}`);
-            setValues(apiData.data);
-            // console.log(apiData.data);
-          } catch (error) {
+            let values = apiData.data;
+            setValues(values);
+            if(values.length==0){
+              setAvilable(false); 
+            } 
+          } catch (error) { 
             console.error('Error fetching data:', error);
-          }
+          }  
         };
       
         fetchData();
@@ -26,7 +31,7 @@ export default function Profile() {
     const confirmed = window.confirm("Are you sure you want to delete this item?");
     if(confirmed){
       await axios.delete(`https://instagram-post.onrender.com/post/delete/${item}`);
-      window.location.reload();
+      navigate('/');
     }
   }
 
@@ -47,21 +52,29 @@ export default function Profile() {
             <Link className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2' to={'/newpost'}>New Post</Link>
         </div>
         <div>
-            {values.length!==0 ? 
-                values.map((item, index)=>{
-                  return (
-                    <div key={index}>
-
-
-
+            { avilable ?
+              (
+                values.length!==0 ? 
+                  values.map((item, index)=>{
+                    return (
+                      <div key={index}>
                         <img className='block ml-auto mr-auto object-cover w-96 mt-20' src={item.image} alt="post" />
                         <h4 className='my-4'>{item.tag}</h4>
                         <Link className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded focus:outline-none focus:shadow-outline" onClick={()=>onDelete(item._id)}>Delete</Link>
-                    </div>
+                      </div>
                   )
                 }) 
                 :
-                <div className='mt-16'>No Post Posted Yet</div> 
+                <div className='placeholder-box flex flex-col items-center justify-center'>
+                      {/* Empty box as a placeholder */}
+                    {Array.from({ length: 5 }, (_, index) => (
+                      <div key={index} className='w-96 h-96 bg-gray-300 m-8'></div>
+                    ))}
+                    <div className='m-8'>Loading...</div>
+                </div>
+              )
+              : 
+              (<div className='m-20'>Not Yet Posted</div>)
             }
         </div>
     </div>
