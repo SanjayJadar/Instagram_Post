@@ -1,14 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useNavigate , Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export default function NewPost() {
 
   const [image, setImage] = useState('');
   const [tag, setTag] = useState('');
-  const username = localStorage.getItem('data');
-
-  const navigate = useNavigate();
+  const username = localStorage.getItem('username'); 
 
   const onSubmit = async(e) =>{
     e.preventDefault();
@@ -19,7 +17,7 @@ export default function NewPost() {
       }
       else{ 
         alert('Posted Successfully');
-        navigate('/')
+        window.history.back()
       }
     })
     .catch(e=>console.log(e.message));

@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation , Link} from 'react-router-dom';
 import axios from 'axios';
+import Placeholder from '../Components/Placeholder';
 
 export default function CreatorDetail() {
 
     const location = useLocation();
     const [values, setValues] = useState([]);
+    const [showImages, setshowImages] = useState([]);
     const [avilable, setAvilable] = useState(true);
 
-    useEffect(()=>{
-        const fetchData = async () => {
-            try {
-              const apiData = await axios.get(`https://instagram-post.onrender.com/post/data/${location.state.username}`);
-              let values = apiData.data;
-              setValues(values.reverse()); 
-              if(values.length===0){
-                setAvilable(false);
-              }
-            } catch (error) {
-              console.error('Error fetching data:', error);
-            }
-          };
-        
+     // Fetch Api Data
+    const fetchData = async () => {
+        try {
+          const apiData = await axios.get(`https://instagram-post.onrender.com/post/data/${location.state.username}`);
+          let value = await apiData.data;
+          if(value.length===0){
+            setAvilable(false);
+          }
+          setshowImages(value.splice(0,5));  
+          setValues(value); 
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+
+        // Load More Data 
+    const loadmoredata = async()=>{
+      const value = values.splice(0,5);
+      setshowImages((prev)=>[...prev, ...value]); 
+    }   
+
+    useEffect(()=>{  
           fetchData();
     },[])
 
@@ -40,23 +50,30 @@ export default function CreatorDetail() {
 
         { avilable ?
           (
-            values.length!==0 ? 
-              values.reverse().map((item, index)=>{
+            showImages.length!==0 ? 
+              <div>
+              {showImages.reverse().map((item, index)=>{
                 return (
                   <div key={index}>
                       <img className='block ml-auto mr-auto object-cover w-96 mt-20' src={item.image} alt="post" />
-                      <h4>{item.tag}</h4>
+                      <h4 className='block ml-auto mr-auto w-80'>{item.tag}</h4>
                   </div>
                 )
-              }) 
-              :
-              <div className='placeholder-box flex flex-col items-center justify-center'>
-                    {/* Empty box as a placeholder */}
-                  {Array.from({ length: 5 }, (_, index) => (
-                    <div key={index} className='w-96 h-96 bg-gray-300 m-8'></div>
-                  ))}
-                  <div className='m-8'>Loading...</div>
+              })} 
+
+                {/* Load More Data  */}
+              {values.length!==0 
+                ?
+                <button className='m-16 p-2 rounded-lg text-slate-600 bg-slate-100' onClick={loadmoredata}>Load more</button>
+                : 
+                <div>
+                  <p className='mt-16'>No more data</p>
+                  <button className='mb-16 mt-2 p-2 rounded-lg text-slate-600 bg-slate-100' onClick={()=>{window.scrollTo({ top: 0, behavior: 'smooth' });}}>Scroll to Top</button>
+                </div>
+              }
               </div>
+              :
+              <Placeholder/>
           )
           : 
           (<div className='m-20'>Not Yet Posted</div>)

@@ -5,16 +5,34 @@ import { useNavigate, Link } from 'react-router-dom';
 export default function Creators() {
 
   const [creator, setCreator] = useState([]);
+  const [showCreators, setshowCreators] = useState([]);
 
   const navigate = useNavigate();
 
+  // Fetch Api Data
+  const fetchapi = async() =>{
+    const apidata = await axios.get('https://instagram-post.onrender.com/creators');
+    const values = await apidata.data;
+    shuffleArray(values);
+
+  } 
+
+  // Store data randomly 
+  const shuffleArray = async(data) => { 
+    // Create a new array by shuffling the initialArr
+    const shuffled = await data.sort(() => Math.random() - 0.5);
+    setshowCreators(shuffled.splice(0,10));
+    setCreator(shuffled);
+  };   
+
+    // Load More Data 
+  const loadmoredata = async()=>{
+    const values = creator.splice(0,10);
+    setshowCreators((prev)=>[...prev, ...values]); 
+  } 
+  
   useEffect(()=>{
-    const fetchapi = async() =>{
-      const apidata = await axios.get('https://instagram-post.onrender.com/creators')
-      setCreator(apidata.data);
-    } 
-    fetchapi();
-    // console.log(creator);
+    fetchapi(); 
   },[])
 
   return (
@@ -28,8 +46,11 @@ export default function Creators() {
             <p class="ml-2">Home</p>
           </div>
         </Link>
-        
-        {creator.map((item, index)=>{
+
+        {showCreators.length!==0 
+        ?
+        <div>
+        {showCreators.map((item, index)=>{
           return(
             <div className='flex justify-center'> 
             <div className='grid grid-cols-2 mt-14 w-60' onClick={()=>{ navigate('/creator/details', {state:{username : item.username}}) }} key={index}>
@@ -39,6 +60,27 @@ export default function Creators() {
             </div>
           )
         })}
+
+                              {/* Load More Data  */}
+        {creator.length!==0 
+          ?
+          <button className='m-16 p-2 rounded-lg text-slate-600 bg-slate-100' onClick={loadmoredata}>Load more</button>
+          : 
+          <div>
+              <p className='mt-16'>No more creators</p>
+              <button className='mb-16 mt-2 p-2 rounded-lg text-slate-600 bg-slate-100' onClick={()=>{window.location.reload();}}>Reload Page</button>
+          </div>
+        } 
+        </div>
+        :
+            <div className='flex flex-col items-center justify-center'>
+                      {/* Empty box as a placeholder */}
+                {Array.from({ length: 10 }, (_, index) => (
+                    <div key={index} className='h-20 w-60 bg-gray-300 mt-14 ml-10'></div>
+                ))}
+                <div className='m-8'>Loading...</div>
+            </div>
+        }
     </div>
   )
 }
