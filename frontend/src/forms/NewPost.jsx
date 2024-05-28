@@ -6,7 +6,7 @@ export default function NewPost() {
 
   const [image, setImage] = useState('');
   const [tag, setTag] = useState('');
-  const username = localStorage.getItem('username'); 
+  const username = sessionStorage.getItem('username'); 
 
   const onSubmit = async(e) =>{
     e.preventDefault();

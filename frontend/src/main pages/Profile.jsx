@@ -8,7 +8,7 @@ export default function Profile() {
   const [values, setValues] = useState([]);
   const [showImages, setshowImages] = useState([]);
   const [avilable, setAvilable] = useState(true);
-  let userData = localStorage.getItem('username'); 
+  let userData = sessionStorage.getItem('username'); 
   const navigate = useNavigate()
 
       // Fetch Api Data
@@ -58,7 +58,7 @@ export default function Profile() {
         </Link>
 
         <div> 
-            <h3 className='my-10 font-serif text-2xl'>Welcome {localStorage.getItem('username')}</h3>
+            <h3 className='my-10 font-serif text-2xl'>Welcome {sessionStorage.getItem('username')}</h3>
             <Link className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2' to={'/newpost'}>New Post</Link>
         </div>
         <div>

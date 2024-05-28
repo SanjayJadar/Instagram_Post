@@ -18,7 +18,7 @@ export default function SignUp() {
       }
       else{
           alert('New Account Created Succussfully'); 
-          localStorage.setItem('username', res.data[0].username);
+          sessionStorage.setItem('username', res.data[0].username);
           navigate('/');
       }
     })

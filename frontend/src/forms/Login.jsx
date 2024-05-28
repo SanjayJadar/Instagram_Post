@@ -16,7 +16,7 @@ export default function Login() {
     .then(res=>{  
       if(res.data !== 'invalid'){
           alert('Logedin Successfully'); 
-          localStorage.setItem('username', res.data.username)
+          sessionStorage.setItem('username', res.data.username)
           navigate('/');
       }
       else{

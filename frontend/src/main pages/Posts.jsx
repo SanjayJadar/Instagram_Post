@@ -9,7 +9,7 @@ export default function Posts() {
   const [showImages, setshowImages] = useState([]);  
   
   let token = false;      // Login Status
-  if(localStorage.getItem('username')){
+  if(sessionStorage.getItem('username')){
       token = true;
   } 
 
